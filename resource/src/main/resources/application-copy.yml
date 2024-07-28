@@ -1,0 +1,35 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/resource?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+#      timeout: 30000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:8086
+          #Add this configuration,resource server will not ping authorization server on startup
+          jwk-set-uri: http://127.0.0.1:8086/oauth2/jwks
+aws:
+  bucket:
+    name:
+    access_key:
+    secret_key:
+  cloud_front:
+    public_key_id:
+    distribution_domain:
+    name_private_key_file:
+    ttl:
