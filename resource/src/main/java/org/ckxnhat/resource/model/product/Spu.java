@@ -26,6 +26,7 @@ public class Spu extends AbstractAuditEntity {
     private String name;
     private String thumbnailId;
     private String slug;
+    private double minPrice;
     private short sort;
     private boolean isPublished;
     private boolean isDeleted;

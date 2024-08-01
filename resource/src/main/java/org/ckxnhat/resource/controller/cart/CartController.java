@@ -35,7 +35,7 @@ public class CartController {
                 data
         ));
     }
-    @GetMapping("/")
+    @GetMapping("/count")
     public ResponseEntity<?> getNumberOfItem(){
         Long data = cartService.countCartItem();
         return ResponseEntity.ok(new SuccessApiResponse(
