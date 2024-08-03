@@ -37,13 +37,17 @@ public class S3Service {
     @Value("${aws.cloud_front.ttl}")
     private int ttl;
     private final Tika tika = new Tika();
-    public String uploadImage(MultipartFile file) throws IOException {
-        String objectKey = generateRandomName();
-        ObjectMetadata md = new ObjectMetadata();
-        md.setContentType(tika.detect(file.getOriginalFilename()));
-        md.setContentLength(file.getSize());
-        amazonS3.putObject(bucketName, objectKey, file.getInputStream(), md);
-        return objectKey;
+    public String uploadImage(MultipartFile file){
+        try {
+            String objectKey = generateRandomName();
+            ObjectMetadata md = new ObjectMetadata();
+            md.setContentType(tika.detect(file.getOriginalFilename()));
+            md.setContentLength(file.getSize());
+            amazonS3.putObject(bucketName, objectKey, file.getInputStream(), md);
+            return objectKey;
+        }catch(Exception e) {
+            return null;
+        }
     }
     public void deleteImage(String objectKey){
         amazonS3.deleteObject(new DeleteObjectRequest(bucketName, objectKey));

@@ -32,8 +32,6 @@ public class Brand extends AbstractAuditEntity {
 
     private String imageId;
 
-    private boolean isPublished;
-
     private boolean isDeleted;
 
     @OneToMany(mappedBy = "brand")

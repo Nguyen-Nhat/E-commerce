@@ -29,7 +29,6 @@ public class Category extends AbstractAuditEntity {
     private String slug;
     private String imageId;
     private int categoryLevel;
-    private boolean isPublished;
     private boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "parent_id")

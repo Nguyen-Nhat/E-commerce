@@ -49,9 +49,6 @@ public class Spu {
     @Field(type = FieldType.Long, name = SpuField.CATEGORY_ID)
     private Long categoryId;
 
-    @Field(name = SpuField.IS_PUBLISHED)
-    private boolean isPublished;
-
     @Field(name = SpuField.IS_DELETED)
     private boolean isDeleted;
 }

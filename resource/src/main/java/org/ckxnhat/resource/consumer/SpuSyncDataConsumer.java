@@ -9,8 +9,6 @@ import org.ckxnhat.resource.repository.search.SpuSearchRepository;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
-
 /**
  * @author MinhNhat
  * @email nguyennhat.110120@gmail.com
@@ -39,15 +37,10 @@ public class SpuSyncDataConsumer {
                 Long brandId = after.get("brand_id").getAsLong();
                 Short sort = after.get("sort").getAsShort();
                 Double price = after.get("min_price").getAsDouble();
-                Boolean isDeleted = after.get("is_deleted").getAsBoolean();
-                Boolean isPublished = after.get("is_published").getAsBoolean();
-                Spu spu = new Spu(id, name, thumbnailId,slug,price,sort,brandId,categoryId,isPublished,isDeleted);
+                boolean isDeleted = after.get("is_deleted").getAsBoolean();
+                Spu spu = new Spu(id, name, thumbnailId,slug,price,sort,brandId,categoryId,isDeleted);
                 switch (action) {
-                    case "c": {
-                        spuSearchRepository.save(spu);
-                        break;
-                    }
-                    case "u": {
+                    case "c", "u": {
                         spuSearchRepository.save(spu);
                         break;
                     }

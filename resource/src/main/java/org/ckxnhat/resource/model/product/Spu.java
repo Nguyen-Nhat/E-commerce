@@ -28,7 +28,6 @@ public class Spu extends AbstractAuditEntity {
     private String slug;
     private double minPrice;
     private short sort;
-    private boolean isPublished;
     private boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "brand_id")

@@ -17,6 +17,5 @@ public class SpuField {
     public static final String SORT = "sort";
     public static final String BRAND_ID = "brandId";
     public static final String CATEGORY_ID = "categoryId";
-    public static final String IS_PUBLISHED = "isPublished";
     public static final String IS_DELETED = "isDeleted";
 }

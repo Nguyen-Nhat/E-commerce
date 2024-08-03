@@ -26,7 +26,6 @@ public class Sku extends AbstractAuditEntity {
     private String code;
     private String gtin;
     private double price;
-    private boolean isAllowedToOrder;
     private boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "spu_id")
