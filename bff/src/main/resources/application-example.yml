@@ -58,6 +58,5 @@ spring:
       repository-type: default
   data:
     redis:
-      host: localhost
-      port: 6379
-      password:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}

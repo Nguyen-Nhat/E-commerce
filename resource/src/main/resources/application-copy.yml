@@ -7,7 +7,7 @@ spring:
       max-request-size: 10MB
 
   datasource:
-    url: jdbc:mysql://localhost:3306/resource?createDatabaseIfNotExist=true
+    url: jdbc:mysql://127.0.0.1:3306/resource?createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
@@ -22,14 +22,14 @@ spring:
         order_inserts: true
         order_updates: true
   elasticsearch:
-    uris: http://localhost:9200
+    uris: {SPRING_ELASTICSEARCH_URIS:http://127.0.0.1:9200}
 
   liquibase:
     enabled: true
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
 
   security:
     oauth2:
@@ -40,7 +40,7 @@ spring:
           jwk-set-uri: http://127.0.0.1:8086/oauth2/jwks
   kafka:
     consumer:
-      bootstrap-servers: ${KAFKA_URL:http://127.0.0.1:29092}
+      bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:http://127.0.0.1:29092}
       group-id: search
 
 topic:
