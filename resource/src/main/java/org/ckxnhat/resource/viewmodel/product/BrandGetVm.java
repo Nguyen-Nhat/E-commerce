@@ -1,6 +1,7 @@
 package org.ckxnhat.resource.viewmodel.product;
 
 import org.ckxnhat.resource.model.product.Brand;
+import org.ckxnhat.resource.service.other.S3Service;
 
 /**
  * @author MinhNhat
@@ -9,13 +10,13 @@ import org.ckxnhat.resource.model.product.Brand;
  */
 
 public record BrandGetVm(Long id, String name, String slug, String description, String imageUrl) {
-    public static BrandGetVm fromModel(Brand brand){
+    public static BrandGetVm fromModel(Brand brand, S3Service s3Service){
         return new BrandGetVm(
                 brand.getId(),
                 brand.getName(),
                 brand.getSlug(),
                 brand.getDescription(),
-                brand.getImageId()
+                s3Service.getSignedUrl(brand.getImageId())
         );
     }
 }

@@ -1,7 +1,7 @@
 package org.ckxnhat.resource.service.product;
 
 import lombok.RequiredArgsConstructor;
-import org.ckxnhat.resource.config.S3Config;
+import org.ckxnhat.resource.constants.ErrorCodeConstant;
 import org.ckxnhat.resource.exception.BadRequestException;
 import org.ckxnhat.resource.exception.DuplicatedException;
 import org.ckxnhat.resource.exception.NotFoundException;
@@ -36,7 +36,7 @@ public class BrandService {
         Page<Brand> brands = brandRepository.findAll(pageable);
         List<BrandGetVm> brandGetVms = brands
                 .stream()
-                .map(this::normalizeData)
+                .map(item -> BrandGetVm.fromModel(item, s3Service))
                 .toList();
         return new BrandListGetVm(
                 brandGetVms,
@@ -48,26 +48,19 @@ public class BrandService {
         );
     }
     public BrandGetVm getBrandById(Long id){
-        Brand brand = brandRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("KHông tim thấy"));
-        if(brand.isDeleted()){
-            throw new BadRequestException("brand co id nay da bi xoa");
-        }
-        return normalizeData(brand);
+        Brand brand = findBrandById(id);
+        checkBrandIsDeleted(brand);
+        return BrandGetVm.fromModel(brand, s3Service);
     }
     public BrandGetVm getBrandBySlug(String slug){
-        Brand brand = brandRepository
-                .findBySlug(slug)
-                .orElseThrow(() -> new NotFoundException("KHông tim thấy"));
-        if(brand.isDeleted()){
-            throw new BadRequestException("brand co id nay da bi xoa");
-        }
-        return normalizeData(brand);
+        Brand brand = findBrandBySlug(slug);
+        checkBrandIsDeleted(brand);
+        return BrandGetVm.fromModel(brand, s3Service);
     }
+
     public BrandGetVm createBrand(BrandPostVm brandPostVm){
         if(brandRepository.existsBySlug(brandPostVm.slug())){
-            throw new DuplicatedException("tồn tại rồi");
+            throw new DuplicatedException(ErrorCodeConstant.BRAND_SLUG_IS_DUPLICATED, brandPostVm.slug());
         }
         String imageId = s3Service.uploadImage(brandPostVm.image());
         Brand brand = Brand.builder()
@@ -76,22 +69,15 @@ public class BrandService {
                 .imageId(imageId)
                 .description(brandPostVm.description())
                 .build();
-        Brand result = brandRepository.save(brand);
-        return normalizeData(result);
+        brandRepository.save(brand);
+        return BrandGetVm.fromModel(brand, s3Service);
     }
     public BrandGetVm updateBrand(BrandPostVm brandPostVm, Long id){
-        Brand brand = brandRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException(""));
-        if(brand.isDeleted()){
-            throw new BadRequestException("brand co id nay da bi xoa");
-        }
+        Brand brand = findBrandById(id);
         if(!brandPostVm.slug().equals(brand.getSlug()) && brandRepository.existsBySlug(brandPostVm.slug())){
-            throw new DuplicatedException("tồn tại rồi");
+            throw new DuplicatedException(ErrorCodeConstant.BRAND_SLUG_IS_DUPLICATED, brandPostVm.slug());
         }
-        if(brand.getImageId() != null){
-            s3Service.deleteImage(brand.getImageId());
-        }
+        s3Service.deleteImage(brand.getImageId());
         String imageId = s3Service.uploadImage(brandPostVm.image());
         brand.setName(brandPostVm.name());
         brand.setSlug(brandPostVm.slug());
@@ -99,24 +85,30 @@ public class BrandService {
         brand.setImageId(imageId);
         brand.setDescription(brandPostVm.description());
         brandRepository.save(brand);
-        return normalizeData(brand);
+        return BrandGetVm.fromModel(brand, s3Service);
     }
 
     public void deleteBrandById(Long id){
-        Brand brand = brandRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException(""));
+        Brand brand = findBrandById(id);
         brand.setDeleted(true);
         brandRepository.save(brand);
     }
-    private BrandGetVm normalizeData(Brand brand){
-        String imageUrl = s3Service.getSignedUrl(brand.getImageId());
-        return new BrandGetVm(
-                brand.getId(),
-                brand.getName(),
-                brand.getSlug(),
-                brand.getDescription(),
-                imageUrl
-        );
+
+
+
+    private Brand findBrandById(Long id){
+        return brandRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException(ErrorCodeConstant.BRAND_ID_NOT_FOUND, id));
+    }
+    private Brand findBrandBySlug(String slug){
+        return brandRepository
+                .findBySlug(slug)
+                .orElseThrow(() -> new NotFoundException(ErrorCodeConstant.BRAND_SLUG_NOT_FOUND, slug));
+    }
+    private void checkBrandIsDeleted(Brand brand){
+        if(brand.isDeleted()){
+            throw new BadRequestException(ErrorCodeConstant.BRAND_IS_DELETED, brand.getId());
+        }
     }
 }

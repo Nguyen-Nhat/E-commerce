@@ -34,14 +34,22 @@ public class Brand extends AbstractAuditEntity {
 
     private boolean isDeleted;
 
-    @OneToMany(mappedBy = "brand")
-    private List<CategoryBrand> categories = new ArrayList<>();
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
+    @Builder.Default
     private List<Spu> spus = new ArrayList<>();
     @Override
     public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof Brand)) return false;
         return id != null && id.equals(((Brand)obj).id);
+    }
+
+    /*
+     * one bucket Set/ Hashmap
+     * https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+     **/
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

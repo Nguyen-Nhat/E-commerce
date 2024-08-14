@@ -21,6 +21,7 @@ public class SpuRegularAttributeValue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "attribute_value")
     private String value;
 
     @ManyToOne
@@ -36,5 +37,14 @@ public class SpuRegularAttributeValue {
         if(obj == this) return true;
         if(!(obj instanceof SpuRegularAttributeValue)) return false;
         return id != null && id.equals(((SpuRegularAttributeValue)obj).getId());
+    }
+
+    /*
+     * one bucket Set/ Hashmap
+     * https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+     **/
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -4,6 +4,8 @@ import org.ckxnhat.resource.model.product.Sku;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * @author MinhNhat
  * @email nguyennhat.110120@gmail.com
@@ -12,4 +14,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SkuRepository extends JpaRepository<Sku, Long> {
+    boolean existsByGtin(String gtin);
+    Optional<Sku> findByGtin(String gtin);
 }

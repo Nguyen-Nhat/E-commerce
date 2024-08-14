@@ -10,5 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
  * @datetime 2024-08-02 10:02:36.106
  */
 
-public record BrandPostVm(@NotBlank String name,@NotBlank String slug, String description,MultipartFile image) {
+public record BrandPostVm(
+        @NotBlank String name,
+        @NotBlank String slug,
+        String description,
+        MultipartFile image
+) {
 }

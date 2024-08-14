@@ -7,13 +7,21 @@ services:
       - "3306:3306"
     restart: always
     environment:
-      MYSQL_DATABASE: debezium
       MYSQL_ROOT_PASSWORD: root
     command: --character-set-server=utf8 --collation-server=utf8_general_ci
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - ecom-network
+
+  redis:
+    image: redis:7.4.0
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ecom-network
+
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.7.0
@@ -42,26 +50,11 @@ services:
     networks:
       - ecom-network
 
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
-    container_name: kafka-ui
-    ports:
-      - 9000:8080
-    depends_on:
-      - zookeeper
-      - kafka
-    environment:
-      KAFKA_CLUSTERS_0_NAME: debezium-kafka-ui
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
-      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
-    networks:
-      - ecom-network
-
   debezium:
     image: debezium/connect:2.5.0.Final
     container_name: debezium
     ports:
-      - 8083:8083
+      - "8083:8083"
     environment:
       GROUP_ID: 1
       CONFIG_STORAGE_TOPIC: debezium-config
@@ -75,7 +68,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
     container_name: elasticsearch-ecom
     ports:
-      - 9200:9200
+      - "9200:9200"
     environment:
       - bootstrap.memory_lock=true
       - discovery.type=single-node
@@ -86,15 +79,64 @@ services:
     networks:
       - ecom-network
 
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:7.10.0
-#    container_name: kibana-ecom
-#    ports:
-#      - 5601:5601
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      - ecom-network
+  bff:
+    build:
+      context: .
+      dockerfile: ./bff/Dockerfile
+    container_name: bff
+    environment:
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+    ports:
+      - "8087:8087"
+    links:
+      - redis
+    depends_on:
+      - redis
+    networks:
+      - ecom-network
+
+  resource:
+    build:
+      context: .
+      dockerfile: ./resource/Dockerfile
+    container_name: resource
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/resource?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_ELASTICSEARCH_URIS=elasticsearch:9200
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+    ports:
+      - "8080:8080"
+    links:
+      - redis
+    depends_on:
+      - mysql
+      - redis
+      - elasticsearch
+      - debezium
+      - kafka
+    networks:
+      - ecom-network
+
+  identity:
+    build:
+      context: .
+      dockerfile: ./identity/Dockerfile
+    container_name: identity
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/identity?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8086:8086"
+    depends_on:
+      - mysql
+    networks:
+      - ecom-network
 
 networks:
   ecom-network:

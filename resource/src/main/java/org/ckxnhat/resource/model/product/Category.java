@@ -28,26 +28,33 @@ public class Category extends AbstractAuditEntity {
     private String description;
     private String slug;
     private String imageId;
-    private int categoryLevel;
     private boolean isDeleted;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
-    private List<Category> categories = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Category> children = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category")
-    private List<CategoryBrand> categoryBrands = new ArrayList<>();
-
-    @OneToMany(mappedBy = "category")
-    private List<AttributeGroup> attributeGroup;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<AttributeGroup> attributeGroup = new ArrayList<>();
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Spu> spus = new ArrayList<>();
     @Override
     public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof Category)) return false;
         return id != null && id.equals(((Category)obj).id);
+    }
+
+    /*
+     * one bucket Set/ Hashmap
+     * https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+     **/
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -8,6 +8,7 @@ import org.ckxnhat.resource.viewmodel.cart.CartItemVm;
 import org.ckxnhat.resource.viewmodel.response.SuccessApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ import java.util.List;
 @Validated
 @RequestMapping("/cart")
 @RequiredArgsConstructor
+@PreAuthorize("isAuthenticated()")
 public class CartController {
     private final CartService cartService;
     @GetMapping("/")
@@ -67,14 +69,6 @@ public class CartController {
                 data
         ));
     }
-//    @PutMapping("/update")
-//    public ResponseEntity<?> update(@RequestBody List<CartItemVm> cartItemVms){
-//        List<CartItemVm> data = cartService.updateCart(cartItemVms);
-//        return ResponseEntity.ok(new SuccessApiResponse(
-//                HttpStatus.OK.getReasonPhrase(),
-//                data
-//        ));
-//    }
     @DeleteMapping("/remove")
     public ResponseEntity<?> removeCartItem(@Min(1) @RequestParam long skuId){
         cartService.removeCartItem(skuId);

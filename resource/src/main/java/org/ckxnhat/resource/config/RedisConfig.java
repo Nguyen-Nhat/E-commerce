@@ -17,10 +17,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
     @Bean
-    LettuceConnectionFactory connectionFactory(){
-        return new LettuceConnectionFactory();
-    }
-    @Bean
     public RedisTemplate<String,?> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String,String> template = new RedisTemplate<>();
         // the default is something like a byte serializer, change to string serializer

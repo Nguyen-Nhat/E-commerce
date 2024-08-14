@@ -30,13 +30,23 @@ public class AttributeGroup {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "attributeGroup")
-    private List<AttributeNameGroup> attributeNameGroups = new ArrayList<>();
+    @OneToMany(mappedBy = "attributeGroup", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<AttributeName> attributes = new ArrayList<>();
 
     @Override
     public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof AttributeGroup)) return false;
         return id != null && id.equals(((AttributeGroup)obj).id);
+    }
+
+    /*
+    * one bucket Set/ Hashmap
+    * https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+    **/
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -2,9 +2,7 @@ package org.ckxnhat.resource.controller.product;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.client.protocol.ResponseContentEncoding;
 import org.ckxnhat.resource.constants.PageConstant;
 import org.ckxnhat.resource.service.product.BrandService;
 import org.ckxnhat.resource.viewmodel.product.BrandGetVm;
@@ -14,12 +12,10 @@ import org.ckxnhat.resource.viewmodel.response.SuccessApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 /**
  * @author MinhNhat
@@ -30,9 +26,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/brand")
 @RequiredArgsConstructor
+@Validated
 public class BrandController {
     private final BrandService brandService;
     @GetMapping("")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<?> getBrands(
             @RequestParam(name = PageConstant.PAGE_NUMBER_NAME, defaultValue = PageConstant.PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(name = PageConstant.PAGE_SIZE_NAME, defaultValue = PageConstant.PAGE_SIZE, required = false) int pageSize
@@ -44,6 +42,7 @@ public class BrandController {
         ));
     }
     @GetMapping("/{id}")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<?> getBrandById(@Min(1) @PathVariable Long id) {
         BrandGetVm data =  brandService.getBrandById(id);
         return ResponseEntity.ok(new SuccessApiResponse(
@@ -52,6 +51,7 @@ public class BrandController {
         ));
     }
     @GetMapping("/slug/{slug}")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<?> getBrandById(@PathVariable String slug) {
         BrandGetVm data =  brandService.getBrandBySlug(slug);
         return ResponseEntity.ok(new SuccessApiResponse(
@@ -60,19 +60,19 @@ public class BrandController {
         ));
     }
     @PostMapping(value = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createBrand(@Valid @ModelAttribute BrandPostVm brandPostVm, UriComponentsBuilder ucBuilder){
         BrandGetVm data = brandService.createBrand(brandPostVm);
         return ResponseEntity.created(
                         ucBuilder.replacePath("/brand/{id}").buildAndExpand(data.id()).toUri()
                 )
-                .body(
-                        new SuccessApiResponse(
-                                HttpStatus.CREATED.getReasonPhrase(),
-                                data
-                        )
-                );
+                .body(new SuccessApiResponse(
+                        HttpStatus.CREATED.getReasonPhrase(),
+                        data
+                ));
     }
     @PutMapping(value = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} )
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateBrand(
             @Valid @ModelAttribute BrandPostVm brandPostVm,
             @Min(1) @PathVariable Long id
@@ -84,6 +84,7 @@ public class BrandController {
         ));
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBrand(@Min(1) @PathVariable Long id){
         brandService.deleteBrandById(id);
         return ResponseEntity.noContent().build();

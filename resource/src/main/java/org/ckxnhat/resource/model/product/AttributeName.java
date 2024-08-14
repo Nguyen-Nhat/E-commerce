@@ -21,24 +21,34 @@ import java.util.List;
 @Table(name = "attribute_name")
 public class AttributeName {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private short type;
-    private boolean isRequired;
-    private boolean hasOptions;
 
-    @OneToMany(mappedBy = "attributeName")
-    private List<AttributeNameGroup> attributeNameGroups = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "attribute_group_id")
+    private AttributeGroup attributeGroup;
 
     @OneToMany(mappedBy = "attributeName", fetch = FetchType.LAZY)
-    private List<SkuSaleAttributeValue> skuSaleAttributeValues = new ArrayList<>();
+    @Builder.Default
+    private List<SpuSaleAttributeMapping> spuSaleAttributeValues = new ArrayList<>();
 
     @OneToMany(mappedBy = "attributeName", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<SpuRegularAttributeValue> spuRegularAttributeValues = new ArrayList<>();
     @Override
     public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof AttributeName)) return false;
         return id != null && id.equals(((AttributeName) obj).id);
+    }
+
+    /*
+     * one bucket Set/ Hashmap
+     * https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+     **/
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -6,6 +6,7 @@ import org.ckxnhat.resource.viewmodel.response.SuccessApiResponse;
 import org.ckxnhat.resource.viewmodel.search.SpuListGetVm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/search")
 @RequiredArgsConstructor
+@PreAuthorize("permitAll()")
 public class SearchController {
     private final SpuSearchService spuSearchService;
     @GetMapping("/spu/suggest")

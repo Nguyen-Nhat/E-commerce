@@ -1,0 +1,194 @@
+{
+  "status": "OK",
+  "timestamp": "2024-08-13T14:36:25.010+00:00",
+  "data": {
+    "id": 10,
+    "name": "Laptop MSI Gaming Stealth 14 AI Studio A1VFG Ultra 7",
+    "slug": "msi-stealth-14-ai-studio-a1vfg-ultra-7-085151511",
+    "brand": {
+      "id": 1,
+      "name": "Logitech",
+      "slug": "lo-gi-tech"
+    },
+    "category": {
+      "id": 1,
+      "name": "Laptop",
+      "slug": "laptop"
+    },
+    "skus": [
+      {
+        "gtin": "ABC123c24",
+        "price": 4.888E7,
+        "key": "[37,39]",
+        "attribute": {
+          "Ổ cứng": "512GB",
+          "RAM": "8GB"
+        },
+        "id": 6,
+        "is_deleted": false
+      },
+      {
+        "gtin": "ABC123c25",
+        "price": 5.888E7,
+        "key": "[37,40]",
+        "attribute": {
+          "Ổ cứng": "1024GB",
+          "RAM": "8GB"
+        },
+        "id": 7,
+        "is_deleted": false
+      }
+    ],
+    "thumbnail_url": "https://d19j7s8y0q6xk4.cloudfront.net/4d8acba1-b1723382335561?Expires=1723631968&Signature=iebm7lU1tHpDktdyhGrRixjPQGewq22jT3FT2oqu3SJPjS2mQQyqBWPTlosyHlcgc3pvBeJ-M4UYxFU1rAnpNe2vTxY2T-jToU0FjB~-aekQoHZmNNlN9DvPYN2kiJeiWVGOkLf~oPYGf8mOSnrcpmwNVoJwU7L2impmwiH2Z4Z9NgJIeDoZsTacZeWVJMu8cbZVCPlbbkf1R23745YJIXrJpdWG8R7b~N8yAQym7TnoQ1TlIzP1zH7~3Gu2He~3rFJkMx5WOqTRZvrWqFHtxu~3rKssR74UO-SBTGxzD-qLOnGgzNpharVy6qbxR5BleOY7n3Oi3ZVkvUEIA__&Key-Pair-Id=K2TAPK5RBX9RJB",
+    "min_price": 4.99991E8,
+    "images": [
+      {
+        "id": 7,
+        "image_url": "https://d19j7s8y0q6xk4.cloudfront.net/66bc3f84-c1723389115695?Expires=1723631968&Signature=ghj44d2bTGFz8hqbw2S5O6zWiIbATBHwSvBH1-S2Qqmb6pxw-62fy8q71WIn2Fjt8h6uedt~86xflsNcp13FDAftt6hwDjUflEBvZSdoIMUy06wCSKvc3EY9Y7uUKVZXfaTaBTMIHoy3XVyX83avL1KzpsWyLSwvsM4soTOu6I9xDAz8bC6FvWvKmBcy8wuSC99PG0CXyLjy5FtWQET8E7QyFMrAW-5~sFj2U1vEYz2Q4CsiacPkWvXLkI~Er4TeeDJac1NTgyT8DSUGBV5KMSeqXnqTd5691I-errFzr3dUeZdEE8OL6T1dOsmgP3RgN3JF04mUULOcWK93Q__&Key-Pair-Id=K2TAPK5RBX9RJB"
+      },
+      {
+        "id": 8,
+        "image_url": "https://d19j7s8y0q6xk4.cloudfront.net/c2570966-f1723389115695?Expires=1723631968&Signature=Q28WBgzRfcSEcGZlralv9kSqCpS1jWM7qkJpCPPQDxWXcrhfUymff0LrSPjCCOqT5qxkuPyt4tcKjR9qe7Kan-hxwtgPlKNLnDtwTtB6x28SsQLlrBoiO6TzPyRr94C-LwVJcH~67ewV4Fu5Hom74oeHjiaO4WeuJUzd5URNGyP6FzlJCx~3CAuWmzgvgSD0tUTM63c~YKV2GriVMCuyh~HXNsFNS9oY4BvYs0IOE64o~YrWGcz1~d9RciEOTYqiisJQbD4rLKDCswmzu89QzztV4eZTiGPn39HQF42QuAUaVpb6vfDKl7KPwWVw9OVJXaSaTTfunsB6I5yTkg__&Key-Pair-Id=K2TAPK5RBX9RJB"
+      }
+    ],
+    "related_spus": [
+      {
+        "id": 2,
+        "name": "Laptop MSI Gaming Stealth 14 AI Studio A1VFG Ultra 7",
+        "slug": "msi-stealth-14-ai-studio-a1vfg-ultra-7-085v1",
+        "thumbnailUrl": null,
+        "minPrice": 4.99991E8,
+        "brand": {
+          "id": 1,
+          "name": "Logitech",
+          "slug": "lo-gi-tech"
+        },
+        "category": {
+          "id": 1,
+          "name": "Laptop",
+          "slug": "laptop"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Laptop MSI Gaming Stealth 14 AI Studio A1VFG Ultra 7",
+        "slug": "msi-stealth-14-ai-studio-a1vfg-ultra-7-085v2",
+        "thumbnailUrl": null,
+        "minPrice": 4.99991E8,
+        "brand": {
+          "id": 1,
+          "name": "Logitech",
+          "slug": "lo-gi-tech"
+        },
+        "category": {
+          "id": 1,
+          "name": "Laptop",
+          "slug": "laptop"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Laptop MSI Gaming Stealth 14 AI Studio A1VFG Ultra 7",
+        "slug": "msi-stealth-14-ai-studio-a1vfg-ultra-7-085v3",
+        "thumbnailUrl": null,
+        "minPrice": 4.99991E8,
+        "brand": {
+          "id": 1,
+          "name": "Logitech",
+          "slug": "lo-gi-tech"
+        },
+        "category": {
+          "id": 1,
+          "name": "Laptop",
+          "slug": "laptop"
+        }
+      }
+    ],
+    "spu_descriptions": [
+      {
+        "id": 5,
+        "image_url": "https://d19j7s8y0q6xk4.cloudfront.net/14c9e3ef-01723389326496?Expires=1723631968&Signature=XCkSvWhzHmmvhZ1pznJre1Rs9z5QJ8~XTGl6xSsQOmHrG4hZ-6GbWNHmunQpV6XwVnATqTXyyJf8X0Du5bCHMvWvtzbQVt-5qZPTdR~2do85IcOXziSMVdznSzHVuanrV9CfWyswTpsrNQmAqmskj9lxc6ZkXyqD40BQ-TpEgETe0YjxRzOL0N2PaG1evtEdIO-hpNYTml6vakwzGcMViFW4v9foQmvPCwryHzAGbMutj-5cyevMlmJW8a0MnFfdULOyuQRsn1CeVeCavmXsV4LJZ3VOKdokMpu82C9v8o6AzYZLxZ~R7vLeJ2f6af8rajYnpV7IvLnG08LRw__&Key-Pair-Id=K2TAPK5RBX9RJB"
+      },
+      {
+        "id": 6,
+        "image_url": "https://d19j7s8y0q6xk4.cloudfront.net/5de69a68-b1723389353286?Expires=1723631968&Signature=U8W8~W1se6MKXBBxQAD17Y4toXzl-evmdUrLa6hoL7wWsslMBGTeBQAVzC4Bp~ViUB3O7hwCRbPTEhdUVdXeyABPMaoqnJugdnBVWN-st84FCPqL3tzruCmmKv8ii7AhQKut2LR-SVjujplXMPbhrVNb8CUjH1rozvaOlFzI0bPPJKqsIAOyrkgQeX-5NfG-TYmQ2iRYSmSFdYWHfCUG3DJ8x8YmpCvwUgERf3ptegvtK39hPlMgZVgnTWrLAixTkQXSvMP3~O3MNAhiqY5CtmfuXeIUaXMUyCEeIJ6efWYcEfdTSwNYeBBSh~AVZMTmsz1BeI7bXyJGEWGm7IA__&Key-Pair-Id=K2TAPK5RBX9RJB"
+      },
+      {
+        "id": 7,
+        "image_url": "https://d19j7s8y0q6xk4.cloudfront.net/024cdd90-61723389353286?Expires=1723631968&Signature=XrjDn3wZCnS0PQkoBCLy-9r0WblpWGT3EkR51P6Rmc2Pfly5oVnkmGYW4~mMq1yQdjNXQh9AYyFRSiJ6J5bAGJwB1VhJkWWQ2tywhSaJmJmkSqT3NONL-VBndO-BMlM6ujNnPTWfqObpv2vzzH9XsqvJb3jjM3yr~lFy2bhKPp-DjxdzyZ6CXa~W69D1gZ-PI686AeaHze0ixYQqEWHUrOR2tKZxEtkvlBfKEbwT152nIiFplCKJ9ENPCGzzZzAKXb49KlO4TJey2w8x05u01Sh2z6fwEgmfVr2cWpGxu-hKrCEQciMYdP6f-AUWPa3M6qHm49qXeLEB5Rwpjw__&Key-Pair-Id=K2TAPK5RBX9RJB"
+      }
+    ],
+    "regular_attribute": [
+      {
+        "attribute": [
+          {
+            "name": "Kích thước",
+            "value": "14 inch",
+            "attribute_name_id": 6
+          },
+          {
+            "name": "Độ phân giải",
+            "value": "2.8K (2880 x 1800) - OLED",
+            "attribute_name_id": 7
+          },
+          {
+            "name": "Tần số quét",
+            "value": "120 Hz",
+            "attribute_name_id": 8
+          }
+        ],
+        "group_name": "Màn hình"
+      },
+      {
+        "attribute": [
+          {
+            "name": "Công nghệ CPU",
+            "value": "Intel Core Ultra 7 Meteor Lake - 155H",
+            "attribute_name_id": 1
+          },
+          {
+            "name": "Số nhân",
+            "value": "16",
+            "attribute_name_id": 2
+          },
+          {
+            "name": "Số luồng",
+            "value": "22",
+            "attribute_name_id": 3
+          }
+        ],
+        "group_name": "Bộ xử lý"
+      }
+    ],
+    "sale_attribute": [
+      {
+        "name": "RAM",
+        "values": [
+          {
+            "id": 37,
+            "value": "8GB"
+          },
+          {
+            "id": 38,
+            "value": "16GB"
+          }
+        ],
+        "attribute_name_id": 4
+      },
+      {
+        "name": "Ổ cứng",
+        "values": [
+          {
+            "id": 39,
+            "value": "512GB"
+          },
+          {
+            "id": 40,
+            "value": "1024GB"
+          }
+        ],
+        "attribute_name_id": 5
+      }
+    ]
+  }
+}

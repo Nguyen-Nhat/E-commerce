@@ -21,7 +21,7 @@ public class SpuDescription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spu_id")
     private Spu spu;
 
@@ -32,5 +32,14 @@ public class SpuDescription {
         if(obj == this) return true;
         if(!(obj instanceof SpuDescription)) return false;
         return id != null && id.equals(((SpuDescription)obj).id);
+    }
+
+    /*
+     * one bucket Set/ Hashmap
+     * https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+     **/
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

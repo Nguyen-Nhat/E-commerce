@@ -9,34 +9,45 @@ spring:
     oauth2:
       client:
         registration:
-          gateway:
-            provider: provider
-            client-id: client
-            client-secret: secret
+          messaging-gateway-oidc:
+            provider: gateway-client-provider
+            client-id: relive-client
+            client-secret: relive-client
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - openid
-            client-name: gateway
+              - profile
+            client-name: messaging-gateway-oidc
         provider:
-          provider:
+          gateway-client-provider:
             #This configuration,resource server will not ping authorization server on startup
             authorization-uri: http://127.0.0.1:8086/oauth2/authorize
             token-uri: http://127.0.0.1:8086/oauth2/token
             jwk-set-uri: http://127.0.0.1:8086/oauth2/jwks
             user-info-uri: http://127.0.0.1:8086/userinfo
+            user-name-attribute: sub
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
-        - id: product service
+        - id: resource server
           uri: http://127.0.0.1:8080
           predicates:
-            Path=/product/**
-        - id: search service
-          uri: http://127.0.0.1:8081
+            Path=/api/resource/**
+          filters:
+            - RewritePath=/api/resource/(?<segment>.*), /$\{segment}
+            - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, localhost:8087/api/resource,
+        - id: identity server
+          uri: http://127.0.0.1:8086
           predicates:
-            Path=/search/**
+            Path=/api/identity/**
+          filters:
+            - RewritePath=/api/identity/(?<segment>.*), /$\{segment}
+            - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, localhost:8087/api/identity,
       default-filters:
         - TokenRelay
         - RemoveRequestHeader=Cookie
@@ -44,6 +55,7 @@ spring:
     redis:
       flush-mode: on_save
       namespace: gateway:session
+      repository-type: default
   data:
     redis:
       host: localhost

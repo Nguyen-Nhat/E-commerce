@@ -4,6 +4,8 @@ import org.ckxnhat.resource.model.product.SpuDescription;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author MinhNhat
  * @email nguyennhat.110120@gmail.com
@@ -12,4 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpuDescriptionRepository extends JpaRepository<SpuDescription, Long> {
+    List<SpuDescription> findAllBySpuIdAndIdIn(Long spuId, List<Long> ids);
+    void deleteBySpuIdAndIdIn(Long id, List<Long> ids);
+    List<SpuDescription> findAllBySpuId(Long spuId);
 }

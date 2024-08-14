@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.client.web.server.DefaultServerOAuth2
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizationRequestResolver;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 /**
  * @author MinhNhat
  * @email nguyennhat.110120@gmail.com
@@ -26,11 +24,12 @@ public class SecurityConfig {
                                                          ServerOAuth2AuthorizationRequestResolver resolver) {
         return http
                 .authorizeExchange(authorize -> authorize
-//                        .pathMatchers("/product/**").authenticated()
+                        .pathMatchers("/api/resource/**").permitAll()
+                        .pathMatchers("/api/identity/**").permitAll()
                         .anyExchange().authenticated()
-//                        .anyExchange().permitAll()
                 )
                 .oauth2Login(auth -> auth.authorizationRequestResolver(resolver))
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .build();
     }
     @Bean
