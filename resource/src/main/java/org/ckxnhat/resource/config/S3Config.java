@@ -1,14 +1,14 @@
 package org.ckxnhat.resource.config;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.S3Client;
 
 /**
  * @author MinhNhat
@@ -22,13 +22,25 @@ public class S3Config {
     private String awsAccessKey;
     @Value("${aws.bucket.secret_key}")
     private String awsSecretKey;
+    @Bean
+    public S3Client s3Client(){
+        AwsCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(
+                AwsBasicCredentials.create(awsAccessKey,awsSecretKey)
+        );
+        return S3Client.builder()
+                .credentialsProvider(credentialsProvider)
+                .region(Region.AP_SOUTHEAST_2)
+                .build();
+    }
 
     @Bean
-    public AmazonS3 s3client(){
-        AWSCredentials awsCredentials = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
-        return AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-                .withRegion(Regions.AP_SOUTHEAST_2)
+    public S3AsyncClient s3AsyncClient(){
+        AwsCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(
+                AwsBasicCredentials.create(awsAccessKey,awsSecretKey)
+        );
+        return S3AsyncClient.builder()
+                .credentialsProvider(credentialsProvider)
+                .region(Region.AP_SOUTHEAST_2)
                 .build();
     }
 }
